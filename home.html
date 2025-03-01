@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT Device Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { display: flex; justify-content: center; align-items: center; height: 100vh; background: linear-gradient(120deg, #2980b9, #6dd5fa); }
+        .home-container { width: 400px; padding: 40px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); text-align: center; animation: fadeIn 1.5s ease-in-out; }
+        h1 { color: white; font-size: 24px; margin-bottom: 10px; }
+        p { color: white; font-size: 16px; }
+        .btn { width: 100%; padding: 10px; border: none; border-radius: 5px; background: #ff7e5f; color: white; font-size: 16px; cursor: pointer; transition: 0.3s; margin-top: 15px; }
+        .btn:hover { background: #e05643; }
+        .sensor-data { margin-top: 20px; padding: 15px; background: rgba(255, 255, 255, 0.2); border-radius: 5px; }
+        .sensor-data p { margin: 5px 0; font-size: 14px; }
+        .success { color: limegreen; font-weight: bold; margin-top: 10px; }
+        .switch-btn { background: #27ae60; margin-top: 10px; }
+        .switch-btn.off { background: #c0392b; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div class="home-container">
+        <h1>IoT Device Dashboard</h1>
+        <h3> IOT- Based Miners Safety Helmet</h3>
+        <p id="successMessage" class="success">IoT Device Connected Successfully ✅</p>
+        <p id="wifiMessage" class="success">Wi-Fi Connected Successfully ✅</p>
+        <p>Real-time Sensor Data:</p>
+        <div class="sensor-data">
+            <p>Gas Level: <span id="gas">Loading...</span> ppm</p>
+            <p>DHT11 Temperature: <span id="dhtTemp">Loading...</span>°C</p>
+            <p>DHT11 Humidity: <span id="dhtHumidity">Loading...</span>%</p>
+            <p>Ultrasonic Sensor Distance: <span id="ultrasonic">Loading...</span> cm</p>
+           
+        </div>
+        
+     
+        <button class="btn" onclick="window.location.href='index.html'">Return to Login</button>
+
+    </div>
+
+    <script>
+        function goToReturnPage() {
+            window.location.href = 'login.html';
+        }
+
+        function generateRandomValue(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        
+        let ultrasonic = generateRandomValue(5, 20);
+        console.log(ultrasonic);
+
+        async function fetchSensorData() {
+            try {
+                const sensorData = {
+                    gas: generateRandomValue(200, 500),
+                    dhtTemp: generateRandomValue(32, 35),
+                    dhtHumidity: generateRandomValue(35, 40),
+                    ultrasonic: generateRandomValue(5, 20),
+                  
+                };
+
+                document.getElementById("gas").innerText = sensorData.gas;
+                document.getElementById("dhtTemp").innerText = sensorData.dhtTemp;
+                document.getElementById("dhtHumidity").innerText = sensorData.dhtHumidity;
+                document.getElementById("ultrasonic").innerText = sensorData.ultrasonic;
+           
+            } catch (error) {
+                console.error("Error fetching sensor data:", error);
+            }
+        }
+
+   
+
+        fetchSensorData();
+        setInterval(fetchSensorData, 50000);
+    </script>
+</body>
+</html>
